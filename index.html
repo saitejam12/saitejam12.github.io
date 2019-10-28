@@ -1,0 +1,92 @@
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
+
+export default function CheckboxList() {
+  const classes = useStyles();
+  // Replace this sample with API call to get apps
+  const sample = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const [selected, setSelected] = React.useState([]);
+
+  const handleToggle = value => () => {
+    const currentIndex = selected.indexOf(value);
+    const newChecked = [...selected];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    setSelected(newChecked);
+  };
+  const handleSelectAllClick = event => {
+    if (event.target.checked) {
+      const newSelecteds = sample.map(n => n);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
+  const numSelected = selected.length;
+  const isSelected = value => selected.indexOf(value) !== -1;
+  return (
+    <>
+      <div className={classes.title}>
+        <Checkbox
+          indeterminate={numSelected > 0 && numSelected < sample.length}
+          checked={numSelected === sample.length}
+          onChange={handleSelectAllClick}
+          inputProps={{ 'aria-label': 'select all desserts' }}
+        />
+        {numSelected > 0 ? (
+          <Typography className={classes.title} color='inherit' variant='h6'>
+            {numSelected} / {sample.length} selected
+          </Typography>
+        ) : (
+          <Typography className={classes.title} variant='h6' id='tableTitle'>
+            Assign Applications
+          </Typography>
+        )}
+      </div>
+      <List className={classes.root}>
+        <Divider />
+        {sample.map(value => {
+          const labelId = `checkbox-list-label-${value}`;
+
+          return (
+            <ListItem key={value} button onClick={handleToggle(value)}>
+              <ListItemIcon>
+                <Checkbox
+                  edge='start'
+                  checked={isSelected(value)}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ 'aria-labelledby': labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText id={labelId} primary={`APP ${value + 1}`} />
+            </ListItem>
+          );
+        })}
+      </List>
+    </>
+  );
+}
