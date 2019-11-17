@@ -15,8 +15,14 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  -webkit-animation: shrinker 2s ease-in forwards;
 }
 
+@keyframes shrinker {
+  to {
+    min-height: 6vh;
+  }
+}
 .App-link {
   color: #09d3ac;
 }
