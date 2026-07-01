@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import "./App.css";
 
 const TechSkill = ({ name, icon }: { name: string; icon: string }) => (
@@ -9,17 +8,6 @@ const TechSkill = ({ name, icon }: { name: string; icon: string }) => (
 );
 
 function App() {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   const calculateYearsOfExperience = () => {
     const startDate = new Date(2019, 4, 1);
     const today = new Date();
@@ -29,7 +17,9 @@ function App() {
       today.getDate(),
     );
 
-    const yearsOfExp = (endDate - startDate) / (1000 * 60 * 60 * 24 * 365.25);
+    const yearsOfExp =
+      (endDate.getTime() - startDate.getTime()) /
+      (1000 * 60 * 60 * 24 * 365.25);
     return yearsOfExp.toFixed(1);
   };
 
