@@ -1,9 +1,12 @@
 {
   "name": "saitejam12.github.io",
+  "homepage": "https://saitejam12.github.io/",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "node -e \"const fs=require('fs'); const path=require('path'); const cachePath=path.join(process.cwd(),'node_modules','.cache','gh-pages'); fs.rmSync(cachePath,{recursive:true,force:true});\" && gh-pages -d dist",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -22,6 +25,7 @@
     "eslint": "^10.6.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
+    "gh-pages": "^6.3.0",
     "globals": "^17.7.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.62.0",
